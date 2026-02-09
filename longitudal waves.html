@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Longitudinal Wave simulation</title>
+    <style>
+        canvas 
+        {
+            border: 4px solid rgb(17, 16, 16);
+        }
+        
+        button
+        {
+            font-family: gill sans;
+            color: rgb(8, 246, 179);
+            background-color:  black;
+        }
+        label
+        {
+            font-family: arial black;
+        }
+        
+        p
+        {
+            font-family: copperplate;
+            font-weight: bold;
+            
+        }
+        body
+        {
+            background-image: url('dragon.jpg');
+            background-repeat: no-repeat;
+            background-size: 3000px;
+            position: relative;
+        }
+       
+    </style>
+</head>
+<body>
+    <CENTER><h1 style="font-family:cambria;"><u>LONGITUDINAL WAVES</u></h1></CENTER>
+    <center>
+        <canvas id="waveCanvas" width="1000" height="400"></canvas>
+        <div>
+            <label for="waveWidth">Wave Width: </label>
+            <input type="number" id="waveWidth" value="1000">  <label for="waveSpeed">Wave Speed: </label>
+            <input type="number" id="waveSpeed" value="200">  <label for="waveFrequency">Wave Frequency: </label>
+            <input type="number" id="waveFrequency" value="16">  <label for="waveHeight">Wave Height: </label>
+            <input type="number" id="waveHeight" value="400">
+        </div>
+       <br><p>&#8592 direction of the wave and vibration is paralel</p>
+       <br> <button onclick="updateWaveParameters()">Update Wave</button>
+    </center>
+    <center>
+        <button onclick="toggleTextWindow()">Explain The Longitudal Waves</button>
+        <div id="textWindow">
+           <p> Longitudinal waves can be sinusoidal, but not all longitudinal waves necessarily have a sinusoidal shape.</p>
+            <p>&#8658 Longitudinal waves are waves that consist of a periodic disturbance or vibration that takes place in the same direction as the direction of the travel of the wave. The waves in which the displacement of the medium is in the same direction as the direction of the travel of the wave are known as longitudinal waves
+                <p>&#8658 When the compression and rarefaction regions of the two waves coincide, the condition is known as constructive interference and when both regions do not coincide, the condition is known as destructive interference.</p>
+            <p>&#8658 If a longitudinal wave is traveling  along +x direction, then the displacement y of the element located at distance x of the medium in time t is given by
+    
+             <p> <br>  y = A sin (kx – ωt + ϕ)</br>
+                
+                And, if the longitudinal wave is traveling along the -x direction, then the displacement equation is given by
+                
+              <br>  y = A sin (kx + ωt + ϕ)</br>
+                
+                Where</p>
+                <p>
+                <br> &#8658 Displacement of the particle of the medium in time t</br>
+                <br> &#8658 x = position of the particle from the wave’s source
+                <br>&#8658 t = Time elapsed
+                <br> &#8658 A = Maximum amplitude
+                <br> &#8658 k = Propagation constant or angular wave number
+                <br>&#8658 ω = Angular frequency of the wave
+                <br>&#8658 ϕ = initial phase</p>
+
+            </p>
+         
+            <p>
+                However, not all longitudinal waves exhibit a perfect sinusoidal shape. In some cases, disturbances or variations in the medium may cause the wave shape to deviate from a pure sine wave. For example, shock waves or more complex disturbances can lead to longitudinal waves with different shapes.
+        
+                In summary, while longitudinal waves can be represented by sinusoidal equations, real-world situations may lead to deviations from a perfect sinusoidal shape.
+            </p>
+                <div style="text-align: center;">
+                    <img src="bd2.jpg" alt="longitudal waves">
+                    
+                </div>
+                
+            <button onclick="closeTextWindow()">Close</button>
+        </div>
+    </center>
+    <script>
+        const canvas = document.getElementById('waveCanvas');
+        const ctx = canvas.getContext('2d');
+        let wavePosition = 4;
+
+        function drawWave(waveWidth, waveHeight, waveSpeed, waveFrequency) {
+            canvas.width = waveWidth;
+            canvas.height = waveHeight;
+            ctx.strokeStyle = "orange";
+            ctx.clearRect(0, 0, waveWidth, waveHeight);
+            ctx.beginPath();
+            ctx.moveTo(0, waveHeight / 2);
+            for (let i = 0; i <= waveWidth; i++) {
+                const y = waveHeight / 2 + Math.sin((i + wavePosition) / waveWidth * waveFrequency * Math.PI * 2) * waveHeight / 4;
+                ctx.lineTo(i, y);
+            }
+            ctx.stroke();
+            wavePosition += waveSpeed / 60;
+            requestAnimationFrame(() => drawWave(waveWidth, waveHeight, waveSpeed, waveFrequency));
+        }
+
+        function updateWaveParameters() {
+            const waveWidth = parseInt(document.getElementById("waveWidth").value);
+            const waveHeight = parseInt(document.getElementById("waveHeight").value);
+            const waveSpeed = parseInt(document.getElementById("waveSpeed").value);
+            const waveFrequency = parseInt(document.getElementById("waveFrequency").value);
+            drawWave(waveWidth, waveHeight, waveSpeed, waveFrequency);
+        }
+
+        function toggleTextWindow() {
+            var textWindow = document.getElementById("textWindow");
+            if (textWindow.style.display === "block") {
+                textWindow.style.display = "none";
+            } else {
+                textWindow.style.display = "block";
+            }
+        }
+
+        function closeTextWindow() {
+            var textWindow = document.getElementById("textWindow");
+            textWindow.style.display = "none";
+        }
+
+       
+        drawWave(1000, 400, 200, 16);
+    </script>
+   
+</body>
+</html>
